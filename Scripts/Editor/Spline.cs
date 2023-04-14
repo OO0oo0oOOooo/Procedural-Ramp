@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: Auto Calculate Segments from resolution
+
 [ExecuteAlways]
 public class Spline : MonoBehaviour
 {
     public List<Vector3> points = new List<Vector3>();
 
     // Spline variables
-    public int segments = 0;
+    public int segments = 1;
     public int steps = 10;
 
     // Mesh Data

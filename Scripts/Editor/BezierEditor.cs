@@ -13,11 +13,27 @@ public class BezierEditor : Editor
     SerializedProperty propColor;
 
 
-    [MenuItem("Tools/Procedural Ramp")]
-    public static void SpawnRamp()
+    [MenuItem("GameObject/3D Object/Procedural Ramp")]
+    public static void CreateCustomObject()
     {
-        var proceduralRampPrefab = Resources.Load("Procedural Ramp");
-        Instantiate(proceduralRampPrefab, Vector3.zero, Quaternion.identity);
+        GameObject customObject = new GameObject("Procedural Ramp");
+        customObject.AddComponent<MeshRenderer>();
+        customObject.AddComponent<MeshFilter>();
+        customObject.AddComponent<MeshCollider>();
+        customObject.AddComponent<Spline>();
+
+        Material material = Resources.Load<Material>("BIRP_Mat");
+        customObject.GetComponent<MeshRenderer>().material = material;
+
+        // Set its position to be at the focus point
+        if (SceneView.lastActiveSceneView != null)
+            customObject.transform.position = SceneView.lastActiveSceneView.pivot;
+
+        // Register undo operation
+        Undo.RegisterCreatedObjectUndo(customObject, "Create " + customObject.name);
+
+        // Select newly created object
+        Selection.activeObject = customObject;
     }
 
 

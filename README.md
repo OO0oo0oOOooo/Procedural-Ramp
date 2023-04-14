@@ -1,5 +1,5 @@
 #
-Create surf ramps that can be shaped.
+Generates Surf ramps around a editable spline.
 
 # How To Use
 

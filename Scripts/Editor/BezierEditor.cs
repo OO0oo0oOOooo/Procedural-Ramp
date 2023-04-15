@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Rendering;
+using System.IO;
 
 [CustomEditor(typeof(Spline))]
 public class BezierEditor : Editor
@@ -22,7 +25,42 @@ public class BezierEditor : Editor
         customObject.AddComponent<MeshCollider>();
         customObject.AddComponent<Spline>();
 
-        Material material = Resources.Load<Material>("BIRP_Mat");
+        Material material = Resources.Load<Material>("RampMat");
+        if (material == null)
+        {
+            Shader shader;
+            Type renderPipelineAssetType = GraphicsSettings.renderPipelineAsset?.GetType();
+            switch (renderPipelineAssetType)
+            {
+                case null:
+                    shader = Shader.Find("Standard");
+                    break;
+#if UNITY_URP
+                case Type _ when renderPipelineAssetType == typeof(UniversalRenderPipelineAsset):
+                    shader = Shader.Find("Universal Render Pipeline/Lit");
+                    break;
+#endif
+#if UNITY_HDRP
+                case Type _ when renderPipelineAssetType == typeof(HDRenderPipelineAsset):
+                    shader = Shader.Find("HDRP/Lit");
+                    break;
+#endif
+                default:
+                    shader = Shader.Find("Custom/MyShader");
+                    break;
+            }
+
+            material = new Material(shader);
+
+            string assetPath = "Assets/ProceduralRamp/Resources/RampMat.mat";
+            string directoryPath = Path.GetDirectoryName(assetPath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            AssetDatabase.CreateAsset(material, assetPath);
+        }
+
         customObject.GetComponent<MeshRenderer>().material = material;
 
         // Set its position to be at the focus point
@@ -56,7 +94,6 @@ public class BezierEditor : Editor
     public override void OnInspectorGUI()
     {
         spline = target as Spline;
-        // base.OnInspectorGUI();
 
         so.Update();
         

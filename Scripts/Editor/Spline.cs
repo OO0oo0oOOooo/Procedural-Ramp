@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Auto Calculate Segments from resolution
+// TODO: Auto Calculate Segments from resolution
+// TODO: Fix Material Updating Bug
+// TODO: URP Support
+// TODO: Mesh Shape
 
 [ExecuteAlways]
 public class Spline : MonoBehaviour
@@ -60,8 +63,7 @@ public class Spline : MonoBehaviour
     }
 
 
-    // Spline API
-
+    // Spline
     public void InitPoints()
     {
         points.Clear();
@@ -91,8 +93,7 @@ public class Spline : MonoBehaviour
     }
 
 
-    // Mesh Stuff ----------------------------------------------------------------------
-
+    // Mesh
     private void CreateMesh(int segmentCount, int steps)
     {
         int triangleIndex = 0;
@@ -170,7 +171,7 @@ public class Spline : MonoBehaviour
         {
             mesh = new Mesh(){ hideFlags = HideFlags.HideAndDontSave};
             GetComponent<MeshFilter>().sharedMesh = mesh;
-            // GetComponent<MeshCollider>().sharedMesh = mesh;
+            GetComponent<MeshCollider>().sharedMesh = mesh;
         }
     }
 

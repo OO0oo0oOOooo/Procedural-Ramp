@@ -74,7 +74,6 @@ public class BezierEditor : Editor
         Selection.activeObject = customObject;
     }
 
-
     void OnEnable()
     {
         so = serializedObject;
@@ -158,7 +157,6 @@ public class BezierEditor : Editor
             spline.points[i] = ControlPointGUI(i);
         }
     }
-
 
     Vector3 snap = Vector3.one * 0.5f;
     private Vector3 ControlPointGUI(int i)

@@ -52,6 +52,7 @@ public class Spline : MonoBehaviour
             InitMesh();
 
         DrawMesh();
+        SetColor();
     }
 
     void OnDisable()

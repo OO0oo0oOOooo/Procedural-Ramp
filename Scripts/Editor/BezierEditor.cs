@@ -13,6 +13,7 @@ public class BezierEditor : Editor
     SerializedProperty propPoints;
     SerializedProperty propSegments;
     SerializedProperty propSteps;
+    SerializedProperty propScale;
 
 
     [MenuItem("GameObject/3D Object/Procedural Ramp")]
@@ -79,6 +80,7 @@ public class BezierEditor : Editor
         propPoints = so.FindProperty("points");
         propSegments = so.FindProperty("segments");
         propSteps = so.FindProperty("steps");
+        propScale = so.FindProperty("scale");
 
         Undo.undoRedoPerformed += UndoCallback;
     }
@@ -100,6 +102,7 @@ public class BezierEditor : Editor
         EditorGUI.EndDisabledGroup();
 
         EditorGUILayout.PropertyField(propSteps);
+        EditorGUILayout.PropertyField(propScale);
         if (so.ApplyModifiedProperties())
         {
             if(spline.mesh == null)

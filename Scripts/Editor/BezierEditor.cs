@@ -95,6 +95,23 @@ public class BezierEditor : Editor
         spline = target as Spline;
 
         so.Update();
+
+        if(propSteps.intValue < 1)
+            propSteps.intValue = 1;
+
+        Vector2 scale = propScale.vector2Value;
+
+        if(scale.x <= 0)
+        {
+            scale.x = 0.1f;
+            propScale.vector2Value = scale;
+        }
+
+        if(scale.y <= 0)
+        {
+            scale.y = 0.1f;
+            propScale.vector2Value = scale;
+        }
         
         EditorGUI.BeginDisabledGroup(true);
         EditorGUILayout.PropertyField(propPoints);
@@ -105,7 +122,7 @@ public class BezierEditor : Editor
         EditorGUILayout.PropertyField(propScale);
         if (so.ApplyModifiedProperties())
         {
-            if(spline.mesh == null)
+            if(spline.mesh == null || propSteps.intValue < 1)
                 return;
 
             spline.DrawMesh();

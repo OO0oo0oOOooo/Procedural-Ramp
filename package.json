@@ -3,15 +3,14 @@
   "version": "1.1.0",
   "displayName": "Procedural Ramp Tool",
   "description": "Quickly create surf ramps with a deformable mesh.",
-  "unity": "2020.3",
+  "unity": "2022.3",
   "keywords": [
     "Surf",
     "Ramp",
     "Surf ramp"
   ],
   "author": {
-    "name": "KM",
+    "name": "Kade Mckee",
     "email": "OO0oo0oOOooo@hotmail.com"
-  },
-  "type": "tool"
+  }
 }

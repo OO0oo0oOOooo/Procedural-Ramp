@@ -140,6 +140,9 @@ public class Spline : MonoBehaviour
         if(transform.rotation != Quaternion.identity)
             transform.rotation = Quaternion.identity;
 
+        if(transform.localScale != Vector3.one)
+            transform.localScale = new Vector3(1, 1, 1);
+
         ClearMesh();
         CreateMesh(segments, steps);
         AssignMeshData();

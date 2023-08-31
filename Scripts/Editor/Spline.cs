@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Auto Calculate Segments from resolution
 // TODO: URP Support
-// TODO: Mesh Shape
 // TODO: Mesh Cap Uvs
-// TODO: Width and Height scalars
 
 [ExecuteAlways]
 public class Spline : MonoBehaviour
@@ -15,6 +12,7 @@ public class Spline : MonoBehaviour
     // Spline variables
     public int segments = 1;
     public int steps = 10;
+    public Vector2 scale = new Vector2(1, 1);
 
     // Mesh Data
     public Mesh mesh;
@@ -73,7 +71,7 @@ public class Spline : MonoBehaviour
     }
 
 
-    // Mesh
+    #region Mesh
     private void CreateMesh(int segmentCount, int steps)
     {
         int triangleIndex = 0;
@@ -88,7 +86,9 @@ public class Spline : MonoBehaviour
                 Vector3 tangent = GetDirection(t, index).normalized;
                 for(int i = 0; i < 6; i++)
                 {
-                    vertices.Add(point + Quaternion.LookRotation(tangent, Vector3.up) * MeshData.Verts[i]);
+                    Vector3 vertOffset = Vector3.Scale(MeshData.Verts[i], scale);
+                    vertices.Add(point + Quaternion.LookRotation(tangent, Vector3.up) * vertOffset);
+
                     uvs.Add(new Vector2(MeshData.UV[i], t));
                 }
             }
@@ -180,9 +180,9 @@ public class Spline : MonoBehaviour
 
         DestroyImmediate(gameObject);
     }
+    #endregion
 
-
-    // Maffs
+    #region Maffs
     public Vector3 GetPointPolynomial(float t, int i)
     {
         return transform.TransformPoint(Bezier.GetPointCubicPolynomial(points[i], points[i + 1], points[i + 2], points[i + 3], t)) - transform.position;
@@ -192,4 +192,5 @@ public class Spline : MonoBehaviour
     {
         return transform.TransformPoint(Bezier.GetFirstDerivative(points[i + 0], points[i + 1], points[i + 2], points[i + 3], t)) - transform.position;
     }
+    #endregion
 }

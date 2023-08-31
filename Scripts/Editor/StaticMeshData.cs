@@ -6,7 +6,6 @@ public class StaticMeshData : MonoBehaviour
 {
     [HideInInspector] public Mesh mesh;
 
-    // For converting back to a editable spline
     [HideInInspector] public List<Vector3> points;
     [HideInInspector] public int segments = 1;
     [HideInInspector] public int steps = 10;

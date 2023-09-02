@@ -15,7 +15,6 @@ public class BezierEditor : Editor
     SerializedProperty propSteps;
     SerializedProperty propScale;
 
-
     [MenuItem("GameObject/3D Object/Procedural Ramp")]
     public static void CreateCustomObject()
     {
@@ -29,23 +28,24 @@ public class BezierEditor : Editor
         if (material == null)
         {
             Shader shader;
-            Type renderPipelineAssetType = GraphicsSettings.renderPipelineAsset?.GetType();
-            switch (renderPipelineAssetType)
+            string renderPipeline = Shader.globalRenderPipeline;
+            Debug.Log(renderPipeline);
+            switch (renderPipeline)
             {
-                case null:
+                case "":
+                    // Built-in render pipeline is active
                     shader = Shader.Find("Standard");
                     break;
-#if UNITY_URP
-                case Type _ when renderPipelineAssetType == typeof(UniversalRenderPipelineAsset):
+                case "UniversalPipeline":
+                    // Universal Render Pipeline is active
                     shader = Shader.Find("Universal Render Pipeline/Lit");
                     break;
-#endif
-#if UNITY_HDRP
-                case Type _ when renderPipelineAssetType == typeof(HDRenderPipelineAsset):
+                case "HDRenderPipeline":
+                    // High Definition Render Pipeline is active
                     shader = Shader.Find("HDRP/Lit");
                     break;
-#endif
                 default:
+                    // Some other custom render pipeline is active
                     shader = Shader.Find("Standard");
                     break;
             }

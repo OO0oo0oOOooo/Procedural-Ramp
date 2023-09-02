@@ -33,19 +33,15 @@ public class BezierEditor : Editor
             switch (renderPipeline)
             {
                 case "":
-                    // Built-in render pipeline is active
                     shader = Shader.Find("Standard");
                     break;
                 case "UniversalPipeline":
-                    // Universal Render Pipeline is active
                     shader = Shader.Find("Universal Render Pipeline/Lit");
                     break;
                 case "HDRenderPipeline":
-                    // High Definition Render Pipeline is active
                     shader = Shader.Find("HDRP/Lit");
                     break;
                 default:
-                    // Some other custom render pipeline is active
                     shader = Shader.Find("Standard");
                     break;
             }

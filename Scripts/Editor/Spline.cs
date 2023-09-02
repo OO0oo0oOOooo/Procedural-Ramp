@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: URP Support
 // TODO: Mesh Cap Uvs
 
 [ExecuteAlways]
